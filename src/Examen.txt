@@ -1,0 +1,93 @@
+
+--Водител связен автобусом выводится вместе с автобусом
+create table driver(
+id serial primary key,
+driver_name varchar unique not null,
+driver_ser_name varchar  unique not null,
+driver_pat_name varchar unique not null,
+id_bus_driver integer references bus(id)
+);
+
+insert into driver(driver_name, driver_ser_name, driver_pat_name, id_bus_driver)
+values
+('Мирбек','Аскаров','Алтынбеков',1),
+('Нурбек','Жумабеков','Аскарович',2),
+('Жодар','Эрланбек','Эмирович',3),
+('Нурлан','Жолгочой','Жолгочоюбыч',4);
+commit;
+
+
+--Маршрут
+create table route(
+id serial primary key,
+route_number integer unique not null,
+starting_point varchar  unique not null,
+finish_point varchar  unique not null
+);
+
+insert into route(route_number, starting_point, finish_point)
+values
+(290, 'Дордой', 'Ново-Павловка'),
+(210, 'ЦУМ', 'Советский'),
+(250, 'Военно-Антоновка', 'Ошский рынок'),
+(201, 'Кирпичный', 'ГУМ')
+commit;
+
+--Автобус связен с маршрутом--
+create table bus(
+id serial primary key,
+bus_marka varchar unique not null,
+bus_number integer  unique not null,
+id_bus integer references route (id)
+);
+
+insert into bus(bus_marka, bus_number, id_bus)
+values
+('Mers 230', 210, 1),
+('Mers 220', 250, 2),
+('Mers 224', 201, 3),
+('Mers 290', 290, 4);
+commit;
+
+--Права водителя связь с водителем и будет выводится вмместе с водителем--
+create table driver_license(
+id serial primary key,
+license varchar  unique not null,
+category integer references driver (id)
+);
+
+insert into driver_license(license, category)
+values
+('D', 1),
+('D1', 2),
+('DE', 3),
+('T', 4);
+commit;
+
+--Журнал где хранятся водители, автобус, время связен с автобусом и водителем--
+create table journal(
+id serial primary key,
+id_driver integer references driver(id),
+id_bus integer references bus(id),
+times timestamp not null
+);
+
+
+insert into journal(id_driver, id_bus, times)
+values
+(1, 1, '2021-7-27 13:10'),
+(2, 2, '2021-7-27 13:20'),
+(3, 3, '2021-7-27 13:40'),
+(4, 4, '2021-7-27 12:10');
+
+select * from journal j;
+select * from driver;
+select * from bus b ;
+select * from driver_license;
+select * from route;
+
+select j.id, d.driver_name, d.driver_ser_name, d.driver_pat_name,l.license ,b.bus_marka, b.bus_number,r.starting_point, j.times, r.finish_point from journal j
+join driver d on d.id = j.id
+join route r on r.id = j.id
+join bus b on b.id = j.id
+join driver_license l on l.id = j.id;
