@@ -1,12 +1,10 @@
-package com.company.Draft;
+package Homework.TasKA;
 
-import java.util.Date;
-
-public class Human {
+public class Coach {
     private int id;
     private String name;
     private String serName;
-    private Date dateOfBirth;
+    private int salary;
 
     public int getId() {
         return id;
@@ -32,21 +30,16 @@ public class Human {
         this.serName = serName;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public int getSalary() {
+        return salary;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     @Override
     public String toString() {
-        return "Human{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", serName='" + serName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                '}';
+        return String.format("ID: %s, Имя: %s, Фамиля: %s, зарплата: %s", id, name, serName, salary,  serName.length() > 3?  " Молодец" : "");
     }
 }
