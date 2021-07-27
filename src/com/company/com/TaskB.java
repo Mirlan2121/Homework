@@ -1,9 +1,18 @@
 package com.company.com;
 
+import Homework.TaskB.GroupSQL;
+import Homework.TaskB.Group_SQL;
+
 public class TaskB {
     public static void main(String[] args) {
-        
+        Group_SQL group = new GroupSQL();
+
+        for (int i = 0; i < group.getAll().size(); i++) {
+            System.out.println(group.getAll().get(i));
+        }
+
     }
+
 }
 
 /**
